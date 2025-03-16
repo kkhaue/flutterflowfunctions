@@ -1,0 +1,48 @@
+// Automatic FlutterFlow imports
+import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart'; // Imports other custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'package:flutter/material.dart';
+// Begin custom action code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
+import 'package:file_picker/file_picker.dart';
+
+Future<List<FFUploadedFile>?> filesPicker(BuildContext context) async {
+  // Abre o seletor de arquivos
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    allowMultiple: true, // Permite seleção de múltiplos arquivos
+    type: FileType.any, // Permite qualquer tipo de arquivo
+  );
+
+  if (result != null) {
+    // Converte os arquivos selecionados para FFUploadedFile
+    List<FFUploadedFile> uploadedFiles = result.files
+        .map((file) => FFUploadedFile(
+              name: file.name,
+              bytes: file.bytes,
+            ))
+        .toList();
+
+    // Extrai os nomes dos arquivos, remove valores nulos e atribui à FFAppState
+    List<String> fileNames = uploadedFiles
+        .map((file) => file.name) // Mapeia para os nomes dos arquivos
+        .where((name) => name != null) // Filtra valores nulos
+        .cast<String>() // Converte para List<String>
+        .toList();
+
+    FFAppState().update(() {
+      FFAppState().filesName = fileNames;
+    });
+
+    // Retorna a lista de arquivos carregados
+    return uploadedFiles;
+  } else {
+    // Usuário cancelou a seleção de arquivos
+    return null;
+  }
+}
+
+//a
