@@ -8,17 +8,20 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
+import '/actions/actions.dart' as action_blocks;
+
 import 'package:file_picker/file_picker.dart';
 
-Future<List<FFUploadedFile>?> filesPicker(BuildContext context) async {
-  // Abre o seletor de arquivos
+Future<List<FFUploadedFile>?> filePicker(BuildContext context) async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    allowMultiple: true, // Permite seleção de múltiplos arquivos
-    type: FileType.any, // Permite qualquer tipo de arquivo
+    allowMultiple: true,
+    type: FileType.any,
   );
 
   if (result != null) {
-    // Converte os arquivos selecionados para FFUploadedFile
     List<FFUploadedFile> uploadedFiles = result.files
         .map((file) => FFUploadedFile(
               name: file.name,
@@ -26,22 +29,9 @@ Future<List<FFUploadedFile>?> filesPicker(BuildContext context) async {
             ))
         .toList();
 
-    // Extrai os nomes dos arquivos, remove valores nulos e atribui à FFAppState
-    List<String> fileNames = uploadedFiles
-        .map((file) => file.name) // Mapeia para os nomes dos arquivos
-        .where((name) => name != null) // Filtra valores nulos
-        .cast<String>() // Converte para List<String>
-        .toList();
-
-    FFAppState().update(() {
-      FFAppState().filesName = fileNames;
-    });
-
-    // Retorna a lista de arquivos carregados
     return uploadedFiles;
   } else {
-    // Usuário cancelou a seleção de arquivos
-    return null;
+    return [];
   }
 }
 
