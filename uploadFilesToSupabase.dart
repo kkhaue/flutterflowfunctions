@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<List<String>> uploadFilesToSupabase(
+Future<List<String>> uploadFilesToSupabaseNewEvolution(
     List<FFUploadedFile> files) async {
   final storage = Supabase.instance.client.storage;
   final bucketName = 'files';
