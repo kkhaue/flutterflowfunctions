@@ -1,5 +1,9 @@
 // Automatic FlutterFlow imports
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart'; // Imports other custom actions
@@ -10,18 +14,18 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<List<String>> uploadFilesToSupabase(List<FFUploadedFile> files) async {
+Future<List<String>> uploadFilesToSupabase(
+    List<FFUploadedFile> files) async {
   final storage = Supabase.instance.client.storage;
-  final bucketName = 'teste'; // Substitua pelo nome do seu bucket
-  final directory = 'files/'; // Substitua pelo diretório desejado
+  final bucketName = 'files';
+  final directory = 'attachments/';
 
   List<Future<String>> uploadTasks = [];
 
   String sanitizeFileName(String fileName) {
     return fileName
-        .replaceAll(
-            RegExp(r'[^a-zA-Z0-9._-]'), '_') // Remove caracteres especiais
-        .replaceAll(' ', '_'); // Substitui espaços por _
+        .replaceAll(RegExp(r'[^a-zA-Z0-9._-]'), '_')
+        .replaceAll(' ', '_');
   }
 
   for (final file in files) {
@@ -42,3 +46,5 @@ Future<List<String>> uploadFilesToSupabase(List<FFUploadedFile> files) async {
 
   return await Future.wait(uploadTasks);
 }
+
+//a
