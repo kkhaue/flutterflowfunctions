@@ -8,11 +8,6 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import '/backend/schema/enums/enums.dart';
-import '/actions/actions.dart' as action_blocks;
-
 import 'package:file_picker/file_picker.dart';
 
 Future<List<FFUploadedFile>?> filePicker(BuildContext context) async {
